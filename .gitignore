@@ -1,0 +1,7 @@
+# ignore token files, it stores my account email and token
+token.mat
+
+# ignore Emacs temp files 
+*~
+\#*\#
+.\#*
