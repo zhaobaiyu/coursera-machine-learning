@@ -62,13 +62,26 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X_biased = [ones(m, 1) X];
+y_new = zeros(m, num_labels);
+for i = 1:m
+    y_new(i, y(i)) = 1;
+end
 
+a2 = [ones(m, 1), sigmoid([ones(m,1), X] * Theta1')];
+a3 = sigmoid(a2 * Theta2');
+J = (sum(sum(-y_new .* log(a3) - (1 - y_new) .* log(1 - a3)))) / m ...
+    + lambda * (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2))) / (2 * m);
+delta3 = a3 - y_new;
+delta2 = delta3 * Theta2 .* a2 .* (1 - a2);
+delta2 = delta2(:, 2:end);
 
-
-
-
-
-
+eye2 = eye(size(Theta2, 2));
+eye2(1, 1) = 0;
+eye1 = eye(size(Theta1, 2));
+eye1(1, 1) = 0;
+Theta2_grad = (delta3' * a2) / m + lambda * Theta2 * eye2 / m;
+Theta1_grad = (delta2' * [ones(m, 1), X]) / m + lambda * Theta1 * eye1 / m;
 
 
 
