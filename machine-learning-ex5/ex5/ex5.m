@@ -164,7 +164,7 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
-lambda = 0;
+lambda = 1;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
@@ -218,3 +218,14 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% ======= Optional Part 9: Computing test set error ===============
+%  Finally, we should evaluate the model using test set 
+%  WITHOUT regularization!!!
+
+lambda = 3;
+X_comb = X_poly
+[theta] = trainLinearReg(X_poly, y, lambda);
+error_test = linearRegCostFunction(X_poly_test, ytest, theta, 0); % lambda = 0
+fprintf('Final Evaluate\n');
+fprintf('lambda: %f, Test set error: %f\n', lambda, error_test);
